@@ -10,6 +10,7 @@ workflows:
     jobs:
       - aws-ecs/deploy-service-update:
           family: "pvr-service"
+          region: AWS_REGION
           cluster-name: 'arn:aws:ecs:us-east-1:316893886507:cluster/pvr'
           container-image-name-updates: "container=pvr-service,image-and-tag=316893886507.dkr.ecr.us-east-1.amazonaws.com/pvr:sql"
           verify-revision-is-deployed: true
