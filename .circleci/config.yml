@@ -8,7 +8,16 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          repo: "pvr"
+          region: AWS_DEFAULT_REGION
+          tag: "${CIRCLE_SHA1}"
       - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build-and-push-image
           family: "pvr-service"
           cluster-name: 'arn:aws:ecs:us-east-1:316893886507:cluster/pvr'
           container-image-name-updates: "container=pvr-service,image-and-tag=316893886507.dkr.ecr.us-east-1.amazonaws.com/pvr:${CIRCLE_SHA1}"
