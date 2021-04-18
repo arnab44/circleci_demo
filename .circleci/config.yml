@@ -17,7 +17,7 @@ workflows:
           tag: "${CIRCLE_SHA1}"
       - aws-ecs/deploy-service-update:
           requires:
-            - aws-ecr/build_and_push_image
+            - aws-ecr/build-and-push-image
           family: "pvr-service"
           cluster-name: 'arn:aws:ecs:us-east-1:316893886507:cluster/pvr'
           container-image-name-updates: "container=pvr-service,image-and-tag=316893886507.dkr.ecr.us-east-1.amazonaws.com/pvr:${CIRCLE_SHA1}"
